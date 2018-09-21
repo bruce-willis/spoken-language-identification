@@ -2,10 +2,7 @@
 ### project specific ###
 ########################
 
-data/
-!data/dowload.py
-!data/readme.md
-!data/sources.yml
+data/raw
 
 ###########################
 ### Standart .gitignore ###

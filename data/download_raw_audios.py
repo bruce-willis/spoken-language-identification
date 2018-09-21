@@ -1,14 +1,14 @@
-# -*- coding: utf-8 -*-
-
-from __future__ import unicode_literals
+import os
+import subprocess
+from typing import List
 
 import yaml
-import subprocess
-import os
 import youtube_dl
 
+import data_utils
 
-def read_yaml(file_name):
+
+def read_yaml(file_name : str):
     with open(file_name, "r", encoding='utf-8') as f:
         return yaml.safe_load(f)
 
@@ -35,32 +35,27 @@ def download_playlist(language, playlist_name, playlist_id):
     download(language, playlist_id, playlist_name, "playlist")
 
 
-def download_playlist1(language_name, playlist_name, playlist_id):
-    os.makedirs(os.path.join(language_name, playlist_name), exist_ok=True)
+def download_type(language_name: str, video_type: str, urls: List[str]):
     ydl_opts = {
         'format': 'bestaudio/best',
-        'outtmpl': f"{language_name}/{playlist_name}/%(title)s.%(ext)s"
+        'outtmpl': f"{data_utils.raw_folder_name}/{language_name}/{video_type}/%(title)s.%(ext)s"
         # 'postprocessors': [{
         #     'key': 'FFmpegExtractAudio',
         #     'preferredcodec': 'wav'
         # }]
     }
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([f"https://www.youtube.com/playlist?list={playlist_id}"])
+        ydl.download(urls)
 
 
-def download_language(language_name, video_types):
-    # if "users" in video_types:
-    #     for user in video_types["users"]:
-    #         download_user(language, user)
-    os.makedirs(language_name, exist_ok=True)
-    if "playlists" in video_types:
-        for playlist_name, playlist_id in video_types["playlists"].items():
-            # download_playlist(language, playlist_name, playlist_id)
-            download_playlist1(language_name, playlist_name, playlist_id)
+def download_language(language_name: str, video_types):
+    for type in data_utils.Youtube_video_types:
+        if type.name in video_types:
+            download_type(language_name, type.name,
+                          [f"{type.value.url}{id}" for id in video_types[type.name]])
 
 
 if __name__ == '__main__':
     sources = read_yaml("sources.yml")
-    for language_name, video_types in list(sources.items()):
+    for language_name, video_types in sources.items():
         download_language(language_name, video_types)

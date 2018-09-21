@@ -27,7 +27,14 @@
 
 russian:
   playlists:
-    Дудь : PLYKXD8BxachLuqUnvroKZ6i_5k_geePzY
+    - PLYKXD8BxachLuqUnvroKZ6i_5k_geePzY
+  channels:
+    - UCMCgOm8GZkHp8zJ6l7_hIuA
+  users:
+    - deutschewellerussian
+  videos:
+    - ZFrhnDlLWH4
+
 
 # arabic:
 #   playlists:

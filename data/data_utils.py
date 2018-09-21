@@ -10,9 +10,9 @@ Type = NamedTuple("TypeInfo", [("url", str), ("folder_name", str)])
 
 """ supported youtube video types """
 class Youtube_video_types(Enum):
-    playlists = Type("https://www.youtube.com/playlist?list=", "")
-    channels = Type("https://www.youtube.com/channel/", "")
-    users = Type("https://www.youtube.com/user/", "")
+    playlists = Type("https://www.youtube.com/playlist?list=", "playlist_title")
+    channels = Type("https://www.youtube.com/channel/", "uploader")
+    users = Type("https://www.youtube.com/user/", "uploader")
     videos = Type("https://www.youtube.com/watch?v=", "")
 
 
